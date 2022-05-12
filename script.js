@@ -1,3 +1,7 @@
+const writeToLog = document.querySelector('.log');
+
+
+
 function computerPlay()
 {
     const moves = ["rock", "paper", "scissors"];
@@ -53,7 +57,7 @@ function game(){
     let playerWin = 0;
     let compWin = 0;
 
-    for (let i = 0; i < 5; i++) {
+    while(playerWin !== 5 && compWin !== 5) {
         let userChoice = prompt("Enter move");
 
         if(userChoice === null){
@@ -61,20 +65,23 @@ function game(){
             break;
         }
 
+        /*
         console.log(userChoice);
         if(userChoice !== "rock" && userChoice !== "paper" && userChoice !== "scissors"){
             console.log("Invalid input.");
             i--;
         }
+        */
 
         userChoice = userChoice.toLowerCase();
         let answer = playRound(userChoice, computerPlay());
 
         console.log(answer);
+        writeToLog.textContent = answer;
         if(answer.includes("win")){
-            playerWin++;
+            ++playerWin;
         } else if(answer.includes("lose")){
-            compWin++;
+            ++compWin;
         }
      }
      
