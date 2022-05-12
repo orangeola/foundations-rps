@@ -1,6 +1,21 @@
 const writeToLog = document.querySelector('.log');
+let playerWin = 0;
+let compWin = 0;
 
+const buttons = document.querySelectorAll('button');
 
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    if(playerWin !== 5 && compWin !== 5)
+    {
+        game(button.id);
+    }
+    else
+    {
+        writeToLog.textContent = results(playerWin, compWin);
+    }
+  });
+});
 
 function computerPlay()
 {
@@ -45,47 +60,29 @@ function playRound(playerSelection, computerSelection)
 
 function results(playerWin, compWin){
     if(playerWin > compWin){
-        console.log("You win! " + playerWin + " against " + compWin);
+        return "You win! " + playerWin + " against " + compWin;
     } else if(compWin > playerWin){
-        console.log("You lose... " + playerWin + " against " + compWin);
+        return "You lose... " + playerWin + " against " + compWin;
     } else {
-        console.log("Tie! " + playerWin + " against " + compWin);
+        return "Tie! " + playerWin + " against " + compWin;
     }
 }
 
-function game(){
-    let playerWin = 0;
-    let compWin = 0;
+function game(userChoice){
 
-    while(playerWin !== 5 && compWin !== 5) {
-        let userChoice = prompt("Enter move");
+    if(playerWin === 5 || compWin === 5)
+    {
+        writeToLog = results(playerWin, compWin);
+        return;
+    }
 
-        if(userChoice === null){
-            console.log("You quit.");
-            break;
-        }
+    let answer = playRound(userChoice, computerPlay());
+    console.log(answer);
+    writeToLog.textContent = answer;
 
-        /*
-        console.log(userChoice);
-        if(userChoice !== "rock" && userChoice !== "paper" && userChoice !== "scissors"){
-            console.log("Invalid input.");
-            i--;
-        }
-        */
-
-        userChoice = userChoice.toLowerCase();
-        let answer = playRound(userChoice, computerPlay());
-
-        console.log(answer);
-        writeToLog.textContent = answer;
-        if(answer.includes("win")){
-            ++playerWin;
-        } else if(answer.includes("lose")){
-            ++compWin;
-        }
-     }
-     
-     results(playerWin, compWin);
+    if(answer.includes("win")){
+        ++playerWin;
+    } else if(answer.includes("lose")){
+        ++compWin;
+    }
 }
-
-game();
