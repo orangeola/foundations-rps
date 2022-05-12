@@ -3,16 +3,14 @@ let playerWin = 0;
 let compWin = 0;
 
 const buttons = document.querySelectorAll('button');
+const score = document.querySelector('.score');
 
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
     if(playerWin !== 5 && compWin !== 5)
     {
         game(button.id);
-    }
-    else
-    {
-        writeToLog.textContent = results(playerWin, compWin);
+        score.textContent = "Player: " + playerWin + " | " + "Computer: " + compWin; 
     }
   });
 });
@@ -77,12 +75,16 @@ function game(userChoice){
     }
 
     let answer = playRound(userChoice, computerPlay());
-    console.log(answer);
     writeToLog.textContent = answer;
 
     if(answer.includes("win")){
         ++playerWin;
     } else if(answer.includes("lose")){
         ++compWin;
+    }
+
+    if(playerWin === 5 || compWin === 5)
+    {
+        writeToLog.textContent = results(playerWin, compWin);
     }
 }
